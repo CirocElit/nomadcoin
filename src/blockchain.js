@@ -33,6 +33,8 @@ const getLastBlock = () => blockchain[blockchain.length - 1];
 
 const getTimestamp = () => new Date().getTime() / 1000;
 
+const getBlockchain = () => blockchain;
+
 const createHash = (index, previousHash, timestamp, data) =>
     CryptoJS.SHA256(index + previousHash + timestamp + JSON.stringify(data)).toString();
 
@@ -107,7 +109,7 @@ const isChainValid = candidateChain => {
 };
 
 const replaceChain = candidateChain => {
-    if (isChainValid(candidateChain) && newChain.length > blockchain.length) {
+    if (isChainValid(candidateChain) && newChain.length > getBlockchain().length) {
         blockchain = candidateChain;
         return true;
     } else {
@@ -117,7 +119,7 @@ const replaceChain = candidateChain => {
 
 const addBlockToChain = candidateBlock => {
     if (isNewBlockValid(candidateBlock, getLastBlock())) {
-        blockcahin.push(candidateBlock);    // 배열의 끝에 아이템을 추가한다.
+        getBlockchain().push(candidateBlock);    // 배열의 끝에 아이템을 추가한다.
         return true;
     } else {
         return false;
