@@ -11,4 +11,16 @@ const PORT = 3000;
 const app = express();
 app.use(bodyParser.json());
 app.use(morgan("combined"));    // 콘솔에서 필요한 정보를 보여준다.
+
+app.get("/blocks", (req, res) => {
+    res.send(getBlockchain());
+});
+
+app.post("/blocks", (req, res) => {
+    const { body: { data }  } = req;
+    const newBlock = createNewBlock(data);
+    res.send(newBlock);
+});
+
+
 app.listen(PORT, () => console.log(`Nomadcoin Server running on ${PORT}`));
